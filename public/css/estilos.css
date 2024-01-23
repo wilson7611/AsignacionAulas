@@ -1,0 +1,13 @@
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.vertical-hr {
+    border: none;
+    border-left: 1px solid #ccc; /* Color y grosor de la línea vertical */
+    height: 500px; /* Altura de la línea vertical */
+    margin: 0 20px; /* Ajusta el margen según tus necesidades */
+}
