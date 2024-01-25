@@ -14,11 +14,11 @@
                 @csrf
                 <div class="form-group">
                   <label for="name">Nombre</label>
-                  <input type="text" name="nombre" required class="form-control" value="{{ $materia->nombre }}">
+                  <input  type="text" name="nombre" required class="form-control" value="{{ $materia->nombre }}">
                 </div>
                 <div class="form-group">
                   <label for="email">Semestre</label>
-                  <input type="text" name="semestre" required class="form-control" value="{{ $materia->semestre }}">
+                  <input  type="text" name="semestre" required class="form-control" value="{{ $materia->semestre }}">
                 </div>
                <br>
                

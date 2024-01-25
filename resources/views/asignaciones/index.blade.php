@@ -298,10 +298,11 @@
 
                             </div>
                             <div class="tab-pane" id="custom-hover-description">
-                                <h6>Customer Reviews</h6>
+                                
                                 <div class="table-responsive">
-                                    <h2>Aulas Asignadas</h2>
-                                    <form action="">
+                                    <h5>Aulas Asignadas</h5>
+                                    <form action="" method="POST">
+                                        @csrf
                                         <table class="table table-bordered nowrap table-striped align-middle">
                                             <thead>
                                                 <tr>
@@ -309,6 +310,7 @@
                                                     <th>Materia</th>
                                                     <th>Docente</th>
                                                     <th>Turno</th>
+                                                    <th># Estudiantes</th>
                                                     <th>Aula</th>
                                                     <th>Capacidad</th>
                                                     <th>Dias</th>
@@ -325,6 +327,7 @@
                                                         <td>{{ optional($asignacionAula->asignacion_previas->docentes)->nombre }}
                                                         </td>
                                                         <td>{{ $asignacionAula->asignacion_previas->turnos }}</td>
+                                                        <td>{{ $asignacionAula->asignacion_previas->numero_estudiantes }}</td>
                                                         <td>{{ optional($asignacionAula->aulas)->nombre }}</td>
                                                         <td>{{ optional($asignacionAula->aulas)->capacidad }}</td>
 

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreign('asignacion_id')->references('id')->on('asignacion_previas');
             $table->unsignedBigInteger('aula_id');
             $table->foreign('aula_id')->references('id')->on('aulas');
+            $table->unsignedBigInteger('dia_id');
+            $table->foreign('dia_id')->references('id')->on('dias')->onDelete('cascade');
 
             $table->timestamps();
         });

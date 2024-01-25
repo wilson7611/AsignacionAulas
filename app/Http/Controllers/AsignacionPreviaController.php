@@ -36,14 +36,14 @@ class AsignacionPreviaController extends Controller
     }
     public function asignarAulasMasivo(Request $request)
     {
-        // Obtener las asignaciones previas seleccionadas
+        
         $asignacionesSeleccionadas = $request->input('asignaciones_seleccionadas', []);
 
         if (empty($asignacionesSeleccionadas)) {
             return redirect()->back()->with('error', 'No se seleccionaron asignaciones para la asignación de aulas.');
         }
 
-        // Verificar si ya se han asignado todas las aulas disponibles
+       
         $aulasDisponibles = Aula::pluck('id')->toArray();
         $aulasAsignadas = AsignacionAula::pluck('aula_id')->toArray();
         $aulasNoAsignadas = array_diff($aulasDisponibles, $aulasAsignadas);
@@ -52,30 +52,30 @@ class AsignacionPreviaController extends Controller
             return redirect()->back()->with('error', 'Ya se han asignado todas las aulas disponibles.');
         }
 
-        // Lógica para asignar automáticamente aulas a las asignaciones previas seleccionadas
+
         foreach ($asignacionesSeleccionadas as $asignacionId) {
-            // Obtener la asignación previa
+           
             $asignacionPrevia = AsignacionPrevia::find($asignacionId);
 
             if ($asignacionPrevia) {
-                // Lógica para asignar automáticamente un aula según la capacidad
+        
                 $capacidadAulas = Aula::whereIn('id', $aulasNoAsignadas)->pluck('capacidad', 'id')->toArray();
                 $numEstudiantes = $asignacionPrevia->numero_estudiantes;
 
                 foreach ($capacidadAulas as $aulaId => $capacidad) {
                     if ($capacidad >= $numEstudiantes) {
-                        // Asigna el aula a la asignación
+                        
                         $asignacionAula = new AsignacionAula([
                             'aula_id' => $aulaId,
                         ]);
 
-                        // Asociar la asignación previa con la asignación de aula
+                       
                         $asignacionPrevia->asignacionAulas()->save($asignacionAula);
 
-                        // Actualizar la lista de aulas disponibles
+                     
                         $aulasNoAsignadas = array_diff($aulasNoAsignadas, [$aulaId]);
 
-                        break; // Salir del bucle después de asignar un aula
+                        break; 
                     }
                 }
             }
@@ -85,7 +85,7 @@ class AsignacionPreviaController extends Controller
     }
     public function asignarAula(AsignacionPrevia $asignacionPrevia)
     {
-        // Verificar si ya se han asignado todas las aulas disponibles
+        
         $aulasDisponibles = Aula::pluck('id')->toArray();
         $aulasAsignadas = $asignacionPrevia->asignacionAulas()->pluck('aula_id')->toArray();
 
@@ -95,18 +95,18 @@ class AsignacionPreviaController extends Controller
             return redirect()->back()->with('error', 'Ya se han asignado todas las aulas disponibles.');
         }
 
-        // Lógica para asignar automáticamente un aula según la capacidad
+       
         $capacidadAulas = Aula::whereIn('id', $aulasNoAsignadas)->pluck('capacidad', 'id')->toArray();
         $numEstudiantes = $asignacionPrevia->numero_estudiantes;
 
         foreach ($capacidadAulas as $aulaId => $capacidad) {
             if ($capacidad >= $numEstudiantes) {
-                // Asigna el aula a la asignación
+                
                 $asignacionAula = new AsignacionAula([
                     'aula_id' => $aulaId,
                 ]);
 
-                // Asociar la asignación previa con la asignación de aula
+               
                 $asignacionPrevia->asignacionAulas()->save($asignacionAula);
 
                 return redirect()->back()->with('success', 'Aula asignada correctamente.');
@@ -115,4 +115,5 @@ class AsignacionPreviaController extends Controller
 
         return redirect()->back()->with('error', 'No hay aulas disponibles con suficiente capacidad.');
     }
+    
 }
